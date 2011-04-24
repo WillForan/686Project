@@ -25,9 +25,7 @@ function main(dirpath)
 	search=strcat(dirpath, dtry, '/*pls');
 	labfile=dir(search);
         labpath=strcat(dirpath,dtry,'/',labfile(1).name);
-	labels=cell(1,1);
-	labels{1}=importdata(labpath);
-
+	labels=importdata(labpath);
 	e=csCompile(e,labels,0)
 	csOSTest(e)
     end

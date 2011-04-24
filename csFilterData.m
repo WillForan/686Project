@@ -9,14 +9,15 @@ function [ filterF filterFC ] = csFilterData( f, indexMap, isTrain, fc, params )
 %   indexMap(i) = -1 if word i should be ignored (rest period)
 %   indexMap(i) = j if word i should appear in column j in the scores
 
-nw = length(unique(f.condition.label));
-nt = length(f.condition.label);
-np = length(f.periods);
-nc = f.channels;
-nx = params.useMean + params.useVar + params.useMedian;
-nd = f.condition.TbinSec * f.sampling;
-ns = params.segments;
-incr = nd/ns;
+nw = length(unique(f.condition.label)); 		%2
+nt = length(f.condition.label);				%21
+np = length(f.periods);					%19
+nc = f.channels;					%14
+nx = params.useMean + params.useVar + params.useMedian;	%1
+nd = f.condition.TbinSec * f.sampling;			%1920
+ns = params.segments;					%4
+incr = nd/ns;						%480
+
 
 %
 %filter the training data
@@ -28,7 +29,11 @@ end
 r = zeros(nt,params.segments*nc*nx);
 sp = 1;
 for p = 1:np
+    disp('p: ');
+    disp(f.periods{p});
     wi = indexMap(f.periods{p}(1));
+    disp('wi is:');
+    disp(wi);
     if wi == -1
         continue;
     end
@@ -73,6 +78,8 @@ if( isTrain )
     
     for wi = 1:nw
         %get the distance to the centroid for each point
+	disp('hi there!!!');
+	disp( wr );
         [unused,unused,unused,d] = kmeans(wr{wi},1);
         [rows cols] = size(wr{wi});
         

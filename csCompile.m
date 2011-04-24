@@ -20,7 +20,7 @@ e.data = zscore(e.data);
 %}; %end of cwords
 
 %Compile some info about the condition
-e.condition.sense = {'sense','nonsense'};
+e.condition.sense = {'Sense','Antisense'};
 %e.condition.label = trialLabels{ci};
 e.condition.label = trialLabels;
 e.condition.TbinSec = 15;
@@ -39,7 +39,7 @@ e.data = zeros(e.condition.expectedSamples,e.channels);
 %trail ends exactly when data stops
 tend = length(tmp);
 %so the start is relative to this
-tstart = max([1 length(tmp) - e.condition.expectSamples]);
+tstart = max([1 length(tmp) - e.condition.expectedSamples]);
 
 %where to copy data from
 dstart = max([1,-offsetSamples]); %always 1 ?

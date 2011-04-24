@@ -1,3 +1,14 @@
+%
+% glue everything together, look at cor_graph.dot for a directional graph
+% main('trials/')
+% expects dir struct like 
+% trails/
+%    person_trail1/
+%           *.pls       --- file containint labels of bin 1/line
+%           *.(csv|mat) --- emotive data in csv 
+%                       or already in mat file 
+%                       (saved output of importEmotiveData as either var 'e' 
+%                          or as a var named after the file name)
 function main(dirpath)
     files    = dir(dirpath);
 
@@ -13,7 +24,7 @@ function main(dirpath)
 	    e=importEmotiveData(csv(1).name);
 	    save([files(f).name,'.mat'],e) 
 	else
-	   matpath=strcat(dirpath,dtry,'/',mat.name)
+	   matpath=strcat(dirpath,dtry,'/',mat.name);
 	   %load file
 	   load(matpath)
 	   %and loading does not bring in e
@@ -31,8 +42,18 @@ function main(dirpath)
         labpath=strcat(dirpath,dtry,'/',labfile(1).name);
 	labels=importdata(labpath);
 	e=csCompile(e,labels,0);
-	csOSTest(e,'logisticRegression')
-	%csOSTest(e,'nbayes')
+	%for i={'logisticRegression','nbayes','neuralnetwork','SMLR'}
+	fprintf('%s--\n',dtry);
+	for i={ ...
+	    'logisticRegression', ...  'nnets' ...
+	     'nbayes', ... 'SMLR', 'nueral', 'knn' ...
+	}
+	    %supress output of classifiers
+	    evalc('[tacc,tracc]=csOSTest(e,i{1})');
+	    %[tacc,tracc]=csOSTest(e,i{1});
+	    fprintf('\t%f %f\t(%s)\n',mean(tacc),mean(tracc),i{1});
+	end
+	
     end
 
 end

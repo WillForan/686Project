@@ -64,5 +64,5 @@ for t = 1:n
     tracc(t) = ra;
 end
 
-mean(tacc)
-mean(tracc)
+%mean(tacc)
+%mean(tracc)

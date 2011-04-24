@@ -36,7 +36,6 @@
 %   rule as the optimization method.  
 
 function [models] = classifierLogisticRegression( varargin )
-  
   l = length(varargin);
   if l < 3
     fprintf('syntax: classifierLogisticRegression(trainSet,trainLabels, parameters)\n');

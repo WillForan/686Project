@@ -35,8 +35,11 @@ e.condition.expectedSamples = e.condition.expectedTimeSec * e.sampling;
 %Shift the data by the offset
 tmp = e.data;
 e.data = zeros(e.condition.expectedSamples,e.channels);
-tstart = max([1 offsetSamples]);
-tend = min([(tstart + e.condition.expectedSamples - 1) (length(tmp))]);
+%tstart = max([1 offsetSamples]);
+%tend = min([(tstart + e.condition.expectedSamples - 1) (length(tmp))]);
+tstart = max([1 length(tmp) - e.condition.expectSamples]);
+tend = length(tmp);
+
 dstart = max([1,-offsetSamples]);
 dend = dstart+tend-tstart;
 

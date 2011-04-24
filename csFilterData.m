@@ -9,12 +9,12 @@ function [ filterF filterFC ] = csFilterData( f, indexMap, isTrain, fc, params )
 %   indexMap(i) = -1 if word i should be ignored (rest period)
 %   indexMap(i) = j if word i should appear in column j in the scores
 
-nw = length(unique(f.condition.words));
-nt = length(f.condition.words);
+nw = length(unique(f.condition.label));
+nt = length(f.condition.label);
 np = length(f.periods);
 nc = f.channels;
 nx = params.useMean + params.useVar + params.useMedian;
-nd = f.condition.TwordSec * f.sampling;
+nd = f.condition.TbinSec * f.sampling;
 ns = params.segments;
 incr = nd/ns;
 

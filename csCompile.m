@@ -60,6 +60,7 @@ es=0;
 for p = 1:nlabels
     ss = es+1;
     es = ss-1 + e.condition.TbinSec*e.sampling;
+    disp(e.condition.label{p});
     e.periods{p} = [ strIndexOf(e.condition.label{p},e.condition.sense), ss, es ];
 end
 

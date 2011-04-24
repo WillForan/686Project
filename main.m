@@ -27,7 +27,8 @@ function main(dirpath)
         labpath=strcat(dirpath,dtry,'/',labfile(1).name);
 	labels=importdata(labpath);
 	e=csCompile(e,labels,0)
-	csOSTest(e)
+	%csOSTest(e,classifierBayes)
+	csOSTest(e,'logisticRegression')
     end
 
 end

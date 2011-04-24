@@ -26,10 +26,8 @@ e.condition.label = trailLabels;
 e.condition.TbinSec = 15;
 
 %Calculate the expected and actual time data was collected
-nlabels = length(e.condition.label );
-
-e.condition.expectedTimeSec = e.condition.TbinSec*nlabels;
-
+nlabels = length(e.condition.label ); 						%2
+e.condition.expectedTimeSec = e.condition.TbinSec*nlabels;			
 e.condition.expectedSamples = e.condition.expectedTimeSec * e.sampling;
 
 %Shift the data by the offset
@@ -37,10 +35,14 @@ tmp = e.data;
 e.data = zeros(e.condition.expectedSamples,e.channels);
 %tstart = max([1 offsetSamples]);
 %tend = min([(tstart + e.condition.expectedSamples - 1) (length(tmp))]);
-tstart = max([1 length(tmp) - e.condition.expectSamples]);
-tend = length(tmp);
 
-dstart = max([1,-offsetSamples]);
+%trail ends exactly when data stops
+tend = length(tmp);
+%so the start is relative to this
+tstart = max([1 length(tmp) - e.condition.expectSamples]);
+
+%where to copy data from
+dstart = max([1,-offsetSamples]); %always 1 ?
 dend = dstart+tend-tstart;
 
 e.data(dstart:dend,:) = tmp(tstart:tend,:);
@@ -49,7 +51,7 @@ e.samples = e.condition.expectedSamples;
 %free tmp memory
 tmp=[]; 
 
-%Compute some statistics we will need
+%make interval storage
 e.periods = cell( 1,length(e.condition.label)  );
 
 

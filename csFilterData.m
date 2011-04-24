@@ -29,11 +29,7 @@ end
 r = zeros(nt,params.segments*nc*nx);
 sp = 1;
 for p = 1:np
-    disp('p: ');
-    disp(f.periods{p});
     wi = indexMap(f.periods{p}(1));
-    disp('wi is:');
-    disp(wi);
     if wi == -1
         continue;
     end
@@ -78,8 +74,6 @@ if( isTrain )
     
     for wi = 1:nw
         %get the distance to the centroid for each point
-	disp('hi there!!!');
-	disp( wr );
         [unused,unused,unused,d] = kmeans(wr{wi},1);
         [rows cols] = size(wr{wi});
         

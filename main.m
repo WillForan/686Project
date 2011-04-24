@@ -6,7 +6,7 @@ function main(dirpath)
 	search=strcat(dirpath, dtry, '/*mat');
 	mat = dir(search);
 	e=[];
-	if(size(mat)==0)
+	if(size(mat,1)==0)
 	    return
 	    search=strcat(dirpath, dtry, '/*csv');
 	    csv = dir(search);
@@ -24,11 +24,15 @@ function main(dirpath)
 	end
 	search=strcat(dirpath, dtry, '/*pls');
 	labfile=dir(search);
+	if(size(labfile,1)==0)
+	  fprintf('error: no pls for %s\n', dtry);
+	  continue
+	end
         labpath=strcat(dirpath,dtry,'/',labfile(1).name);
 	labels=importdata(labpath);
-	e=csCompile(e,labels,0)
-	%csOSTest(e,classifierBayes)
+	e=csCompile(e,labels,0);
 	csOSTest(e,'logisticRegression')
+	%csOSTest(e,'nbayes')
     end
 
 end

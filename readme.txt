@@ -1,84 +1,40 @@
-importEmotiveData( csv)
+-----STATUS-------
+logisticRegression and nbayes return values
 
--applyClassifier.m
-	
-      3 applyClassifier.m
-      7 classifierBayes.m
-      1 csTest.m
--classifierBayes.m
-	
-      2 classifierBayes.m
-      1 trainClassifier.m
--classifierLogisticRegression.m
-	
-      2 classifierLogisticRegression.m
-      1 trainClassifier.m
--classifierNeuralNetwork.m
-	
-      2 classifierNeuralNetwork.m
-      1 trainClassifier.m
--classifierSMLR_core.m
-	
-      4 classifierSMLR_core.m
-      1 classifierSMLR.m
--classifierSMLR.m
-	
-      4 classifierSMLR_core.m
-      4 classifierSMLR.m
-      1 trainClassifier.m
--csCombine.m
-	
-      1 csCombine.m
-      1 csCVTest.m
--csCompile.m
-	
-      1 csCompile.m
--csCVTest.m
-	
-      1 csCVTest.m
--csFilterData.m
-	
-      1 csFilterData.m
-      2 csFilter.m
--csFilter.m
-	
-      1 csFilterData.m
-      3 csFilter.m
-      1 csTest.m
--csGetAnswers.m
-	
-      1 csGetAnswers.m
-      2 csTest.m
--csOSTest.m
-	
-      1 csOSTest.m
--csPlot.m
-	
-      1 csPlot.m
--csTest.m
-	
-      1 csCVTest.m
-      1 csOSTest.m
-      1 csTest.m
--importEmotiveData.m
-	
-      1 importEmotiveData.m
--readline.m
-	
-      1 importEmotiveData.m
-     11 readline.m
--strIndexOf.m
-	
-      5 csCompile.m
-      1 csGetAnswers.m
-      1 strIndexOf.m
--summarizePredictions.m
-	
-      9 classifierBayes.m
-      2 csTest.m
-      7 summarizePredictions.m
--trainClassifier.m
-	
-      2 classifierBayes.m
-      1 csTest.m
-      9 trainClassifier.m
+nnet, svmlight, etc break (complian about double/char type)
+
+
+-----OVERVIEW-----
+Perl and bash are used to generate and record a playlist of 15 sec segments.
+ffplay is required for the playlist
+
+main.m pulls all MATLAB files together except plotting.
+
+Look at cor_graph.dot (via graphviz e.g. dot -Tx11 cor_graph.dot) for a
+directional graph.
+
+Pipeline:
+* Aquire sound files
+** naming convension: Sense-.... and AntiSense-.....
+** Clips ripped from videos of news and tv shows or projectgutenburgh short stories
+** random text generators and short stories were passed to festival for text
+to speach conversion with female US english speaker.
+** split clips into 15second segments
+*** generatePlaylist.pl (generates playlist.sh)
+*** sh2pls.sh (gerates newline seperated Sense/Antisense label from playlist.sh)
+* Record EEG of listner to random sense/antisense segments
+* export emotive to csv
+* MATLAB (main.m)
+** importEmotiveData(csv)
+** csCompile(data,labels)
+*** directory struture: 
+	trial/
+	   person_trail1/
+	   	*pls	   -- newline del. label for each bin
+		*(csv|mat) -- data, if matfile one var struct
+				from importEmotiveData named
+				'e' or the file name
+** csOSTest
+*** called with classifiers
+	nbayes
+	logisticRegression

@@ -1,4 +1,4 @@
-function [ e ] = csCompile( e, trialLables, offsetSamples )
+function [ e ] = csCompile( e, trialLabels, offsetSamples )
 %CSCOMPILEDATA Associates emotive experiment data with condition info
 %   ----ci - codition index (i.e. experement number)
 %   trialLabels - cell of labels for trial (eg { 'sense' 'nonsense' 'nonsense' 'sense' } )
@@ -10,7 +10,7 @@ function [ e ] = csCompile( e, trialLables, offsetSamples )
 %Normalize the data
 e.data = zscore(e.data);
 
-%trialLables = {
+%trialLabels = {
 %
 %    {... condition 1
 %        'sense','sense','nonsense','sense', ...
@@ -21,8 +21,8 @@ e.data = zscore(e.data);
 
 %Compile some info about the condition
 e.condition.sense = {'sense','nonsense'};
-%e.condition.label = trialLables{ci};
-e.condition.label = trialLables;
+%e.condition.label = trialLabels{ci};
+e.condition.label = trialLabels;
 e.condition.TbinSec = 15;
 
 %Calculate the expected and actual time data was collected

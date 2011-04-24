@@ -18,12 +18,16 @@ Pipeline:
 ** naming convension: Sense-.... and AntiSense-.....
 ** Clips ripped from videos of news and tv shows or projectgutenburgh short stories
 ** random text generators and short stories were passed to festival for text
+	scramble.sh uses dadadodo piped to festival configured with _dot_festivalrc
 to speach conversion with female US english speaker.
 ** split clips into 15second segments
 *** generatePlaylist.pl (generates playlist.sh)
 *** sh2pls.sh (gerates newline seperated Sense/Antisense label from playlist.sh)
+
 * Record EEG of listner to random sense/antisense segments
+
 * export emotive to csv
+
 * MATLAB (main.m)
 ** importEmotiveData(csv)
 ** csCompile(data,labels)

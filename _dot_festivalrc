@@ -1,0 +1,10 @@
+; (Parameter.set 'Audio_Command "aplay -D plug:dmix -q -c 1 -t raw -f s16 -r $SR $FILE")
+;(Parameter.set 'Audio_Command "lame $FILE test.mp3")
+;(Parameter.set 'Audio_Method 'Audio_Command)
+;(Parameter.set 'Audio_Required_Format 'snd)
+
+(Parameter.set 'Audio_Method 'Audio_Command)
+(Parameter.set 'Audio_Required_Rate 11025)
+(Parameter.set 'Audio_Required_Format 'riff)
+(Parameter.set 'Audio_Command "lame --quiet --preset voice $FILE - >> $HOME/book/Antisense-festival-dadadodo.mp3")
+

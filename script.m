@@ -11,7 +11,7 @@ expt.classifier = 'logisticRegression';
 classes = {'baseline', 'hammer', 'house'};
 
 s = 1;
-files = dir('data/csv/*.csv');
+files = dir('./*CSV');
 for f = 1:length(files),
     str = files(f).name;
 

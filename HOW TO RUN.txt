@@ -1,0 +1,4 @@
+
+to run the code run main('trial path') where 'trial path' is the directory where all the trials are stored.
+A sample trial is included in this submission but there are more trials available if needed. The trials must
+be in the format shown in the sample trial folder called 'pat'.

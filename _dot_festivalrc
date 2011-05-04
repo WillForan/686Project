@@ -6,5 +6,5 @@
 (Parameter.set 'Audio_Method 'Audio_Command)
 (Parameter.set 'Audio_Required_Rate 11025)
 (Parameter.set 'Audio_Required_Format 'riff)
-(Parameter.set 'Audio_Command "lame --quiet --preset voice $FILE - >> $HOME/book/Antisense-festival-dadadodo.mp3")
+(Parameter.set 'Audio_Command "lame --quiet --preset voice $FILE - >> $HOME/book/Sense-festival-$(date +%k%M%S).mp3")
 

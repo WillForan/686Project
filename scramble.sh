@@ -1,2 +1,4 @@
 #!/usr/bin/env bash
-dadadodo -c 50 *txt| festival --tts
+dadadodo -c 400 *txt| festival --tts
+
+#cat kurt.txt twain_shortstory.txt | festival --tts

@@ -10,15 +10,52 @@
 %                       (saved output of importEmotiveData as either var 'e' 
 %                          or as a var named after the file name)
 function main(dirpath)
-disp('Results reported as accuracy and rank accuracy');
+%
+
+%Filter parameters
+%
+% segments:
+%   the number of temporal bins per column
+%
+% removeVarianceRatio:
+%   
+%
+% minTrialsPerClass:
+%   the minimum number of trails per class to keep for the training set
+% 
+% useMean
+%   1 if a feature should be the per bin mean, 0 otherwise
+%
+% useMedian
+%   1 if a feature should be the per bin median, 0 otherwise
+%
+% useVar
+%   1 if a feature should be the per bin variance, 0 otherwise
+%
+% useHorizNorm
+%   1 if horizontal normalization should be performed, 0 otherwise
+%
+
+%set default parameters, later change mean,median and var
+params.segments = 4;
+
+params.varianceReductionRatio = -1;
+params.minTrialsPerClass = 1;
+
+params.useHorizNorm = 1;
+
+params.useMean = 0;
+params.useMedian = 0;
+params.useVar = 0;
+
+
+%disp('Results reported as accuracy and rank accuracy');
     files    = dir(dirpath);
     for f = 3:length(files) %skip . and ..
-        fprintf('file no. %d\n', (f-2));
+        %fprintf('file no. %d\n', (f-2));
         dtry = files(f).name;
         search=strcat(dirpath, dtry, '/*mat');
-        disp('balls');
-            fprintf('dir is %s\n',search);
-            pause;
+	%fprintf('dir is %s\n',search);
         mat = dir(search);
         e=[];
         if(size(mat,1)==0)
@@ -51,15 +88,27 @@ disp('Results reported as accuracy and rank accuracy');
         labels=importdata(labpath);
         e=csCompile(e,labels,0,f);
         %for i={'logisticRegression','nbayes','neuralnetwork','SMLR'}
-        fprintf('%s--\n',dtry);
+        %fprintf('%s--\n',dtry);
         for i={ ...
             'logisticRegression', ...  'nnets' ...
             'nbayes', ... 'SMLR', 'nueral', 'knn' ...
         }
-            %supress output of classifiers
-            %evalc('[tacc,tracc]=csOSTest(e,i{1})');
-            [tacc,tracc]=csOSTest(e,i{1});
-            fprintf('\t%f %f\t(%s)\n',mean(tacc),mean(tracc),i{1});
+	    %for each mean median var mode
+	    for stat_it=1:3
+	        %reset
+		params.useMean   = 0;
+		params.useMedian = 0;
+		params.useVar    = 0;
+		stats= 'err';
+		if (stat_it==1); params.useMean = 1; stats='mean'; 
+		else if (stat_it==2); params.useMedian = 1; stats='median';
+		else params.useVar = 1; stats='var'; end;
+		%supress output of classifiers
+		evalc('[tacc,tracc]=csOSTest_params(e,i{1},params)');
+		%[tacc,tracc]=csOSTest_params(e,i{1},params);
+		fprintf('%s\t%f\t%s\t%s\n', ...
+		dtry,mean(tacc),i{1},stats);
+	   end
         end
 	
     end

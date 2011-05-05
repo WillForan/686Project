@@ -42,3 +42,6 @@ to speach conversion with female US english speaker.
 *** called with classifiers
 	nbayes
 	logisticRegression
+
+* weka/mkarff.pl   -- take mean of all concatonated periods and label with pls
+* weka/classify.sh -- run weka classifiers, tunning and output to results/ 

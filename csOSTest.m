@@ -31,9 +31,9 @@ params.minTrialsPerClass = 1;
 
 params.useHorizNorm = 1;
 
-params.useMean = 1;
+params.useMean = 0;
 params.useMedian = 0;
-params.useVar = 0;
+params.useVar = 1;
 
 %csFilter.m has more explination
 indexMap = [1,2];  %which indexes get scores, -1 means ignore

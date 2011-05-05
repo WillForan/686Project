@@ -1,7 +1,7 @@
 function takeFFT(x, Fs)
 %input: x = signal to be transformed , FS = sampling rate
 %
-[YfreqDomain,frequencyRange] = twoSidedFFT(y,Fs);
+[YfreqDomain,frequencyRange] = twoSidedFFT(x,Fs);
 twoSidedFFT = figure;
 
 %remember to take the abs of YfreqDomain to get the magnitude!

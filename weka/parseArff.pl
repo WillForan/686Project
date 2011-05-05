@@ -1,13 +1,13 @@
 #!/usr/bin/env perl
 use strict; use warnings;
 
-my $INDVFILE=0; #write to individual files
+my $INDVFILE=1; #write to individual files
 my $BIGFILE=1; #write to one large file
 
 my $HOME="/home/wforan1/";
 my $CSVPATH="$HOME/csv/";
 my $PLSPATH="$HOME/Dropbox/School/2011_01-05Spring/686NeurComp/project/686Project/trials/";
-my $ARFPATH="./";
+my $ARFPATH="./arff/";
 
 my $SAMP=128;
 my $BINDUR=15;
@@ -36,9 +36,11 @@ print $bigfile "\@relation 'all-csv ",time,"'\n",$HEADER if $BIGFILE;
 
 
 my @csv=split /\n/, `ls $CSVPATH*csv`;
+#for all csv files
 for my $f (@csv){
   my $trail=$f;
   $trail=~s/$CSVPATH(.*)\.csv$/$1/;
+  print "--$trail\n";
 
   my $pls=`ls $PLSPATH$trail*/*pls`;
   chomp($pls);
@@ -58,12 +60,13 @@ for my $f (@csv){
 
  my $writefile;
  if($INDVFILE){
-     open my $writefile, ">${ARFPATH}$trail.arff" or warn "cannot open arff: $trail.arff\n";
+     open  $writefile, ">${ARFPATH}$trail.arff" or warn "cannot open arff: $trail.arff\n";
+     print "opened $trail.arff\n";
      next if !$writefile;
  }
  
  #print to file
- print $writefile "\@relation '$trail ",time, "'\n",$HEADER if $INDVFILE; 
+ print $writefile "\@relation '$trail ", time, "'\n", $HEADER if $INDVFILE; 
 
  my $count=0;
  my $samplecount=0;

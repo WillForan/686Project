@@ -1,0 +1,44 @@
+digraph G {
+    applyClassifier -> applyClassifier
+	applyClassifier -> classifierBayes
+	applyClassifier-> csTest
+    classifierBayes -> classifierBayes
+	 classifierBayes-> trainClassifier
+    classifierLogisticRegression -> classifierLogisticRegression
+	classifierLogisticRegression -> trainClassifier
+    classifierNeuralNetwork -> classifierNeuralNetwork
+	 classifierNeuralNetwork-> trainClassifier
+    classifierSMLR_core -> classifierSMLR_core
+	 classifierSMLR_core-> classifierSMLR
+    classifierSMLR -> classifierSMLR_core
+	 classifierSMLR-> classifierSMLR
+	 classifierSMLR-> trainClassifier
+    csCombine -> csCombine
+     csCombine    -> csCVTest
+    csCompile -> csCompile
+    csCVTest -> csCVTest
+    csFilterData -> csFilterData
+     csFilterData    -> csFilter
+    csFilter -> csFilterData
+	 csFilter-> csFilter
+	 csFilter-> csTest
+    csGetAnswers -> csGetAnswers
+     csGetAnswers    -> csTest
+    csOSTest -> csOSTest
+    csPlot -> csPlot
+    csTest -> csCVTest
+     csTest    -> csOSTest
+	 csTest-> csTest
+    importEmotiveData -> importEmotiveData
+    readline -> importEmotiveData
+     readline   -> readline
+    strIndexOf -> csCompile
+     strIndexOf    -> csGetAnswers
+	 strIndexOf-> strIndexOf
+    summarizePredictions -> classifierBayes
+     summarizePredictions    -> csTest
+	 summarizePredictions-> summarizePredictions
+    trainClassifier -> classifierBayes
+    trainClassifier      -> csTest
+     trainClassifier     -> trainClassifier
+ }

@@ -47,10 +47,12 @@ params.useHorizNorm = 1;
 params.useMean = 0;
 params.useMedian = 0;
 params.useVar = 0;
+params.useMode = 0;
 
 
 %disp('Results reported as accuracy and rank accuracy');
     files    = dir(dirpath);
+    all =cell(size(files)-2);
     for f = 3:length(files) %skip . and ..
         %fprintf('file no. %d\n', (f-2));
         dtry = files(f).name;
@@ -78,6 +80,9 @@ params.useVar = 0;
                 e=eval(mat.name(1:length(mat.name)-4));
             end
         end
+
+	%now we have a loaded e
+
         search=strcat(dirpath, dtry, '/*pls');
         labfile=dir(search);
         if(size(labfile,1)==0)
@@ -87,8 +92,11 @@ params.useVar = 0;
         labpath=strcat(dirpath,dtry,'/',labfile(1).name);
         labels=importdata(labpath);
         e=csCompile(e,labels,0,f);
+	all{f-2}=e;
         %for i={'logisticRegression','nbayes','neuralnetwork','SMLR'}
         %fprintf('%s--\n',dtry);
+
+	%for each classifier
         for i={ ...
             'logisticRegression', ...  'nnets' ...
             'nbayes', ... 'SMLR', 'nueral', 'knn' ...
@@ -99,10 +107,27 @@ params.useVar = 0;
 		params.useMean   = 0;
 		params.useMedian = 0;
 		params.useVar    = 0;
+		params.useMode   = 0;
 		stats= 'err';
-		if (stat_it==1); params.useMean = 1; stats='mean'; 
-		else if (stat_it==2); params.useMedian = 1; stats='median';
-		else params.useVar = 1; stats='var'; end;
+		if (stat_it==1) 
+			params.useMean = 1; stats='mean'; 
+		elseif (stat_it==2)
+			params.useMedian = 1; stats='median';
+		elseif(stat_it==3) 
+			params.useVar = 1; stats='var'; 
+		elseif(stat_it==4)
+			params.useMedian = 1;params.useMean=1; 
+			stats='mean_median'; 
+		elseif(stat_it==5) 
+			params.useVar = 1;params.useMedian=1; 
+			stats='var_median'; 
+		elseif(stat_it==6) 
+			params.useVar = 1;params.useMedian=1; 
+			params.useMean = 1;
+			stats='all'; 
+		else 
+			continue;
+		end
 		%supress output of classifiers
 		evalc('[tacc,tracc]=csOSTest_params(e,i{1},params)');
 		%[tacc,tracc]=csOSTest_params(e,i{1},params);
@@ -112,5 +137,6 @@ params.useVar = 0;
         end
 	
     end
+    %csCombine(all(1:6))
 
 end

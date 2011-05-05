@@ -53,6 +53,14 @@ for p = 1:np
             filtered(k,x,:) = var(datapart);
             x = x + 1;
         end
+        %if params.useMode == 1
+        %    filtered(k,x,:) =var(datapart);
+        %    x = x + 1;
+        %end
+        %if params.useFFT == 1
+        %    filtered(k,x,:) = twoSidedFFT(datapart,128);
+        %    x = x + 1;
+        %end
     end
     r(sp,:) = reshape(filtered,1,ns*nx*nc);
     sp = sp + 1;

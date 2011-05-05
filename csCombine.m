@@ -5,7 +5,7 @@ function [ x ] = csCombine( es )
 
 n = length(es);
 nperiods = length(es{1}.periods);
-nwords = length(es{1}.condition.words);
+nlables = length(es{1}.condition.label);
 nsamples = es{1}.samples;
 
 x = es{1};
@@ -15,7 +15,7 @@ x.title = '<combined>';
 
 x.samples = n * nsamples;
 x.periods = cell(1,n*nperiods);
-x.condition.words = cell(1,n*nwords);
+x.condition.label = cell(1,n*nlables);
 x.data = zeros(x.samples,x.channels);
 
 poff = 0;
@@ -27,13 +27,14 @@ for ei = 1:n
 end
 
 for ei = 1:n
-    for w = 1:nwords
-        x.condition.words{(ei-1)*nwords + w} = es{ei}.condition.words{w};
+    for w = 1:nlables
+        x.condition.label{(ei-1)*nlables + w} = es{ei}.condition.label{w};
     end
 end
 
-for ei = 1:n
-    x.data(1+(ei-1)*nsamples:ei*nsamples,:) = es{ei}.data;
+for ei = n:-1:1
+    disp(es{ei}.file)
+    x.data(1+(ei-1)*es{ei}.samples:ei*es{ei}.samples,:) = es{ei}.data;
 end
 
 end

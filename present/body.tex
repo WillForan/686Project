@@ -1,0 +1,316 @@
+% 
+% 
+% LaTeX formating Copyright 2007 by Till Tantau
+%
+
+
+%%header information
+\author{Will Foran\\ Jorge Vendries}
+
+\institute{ } %Carnegie Mellon } 
+
+\lecture{Classifying understanding}{lecture-text}
+\subtitle{within Emotiv EGG recordings}
+
+\date{\today}
+%%%
+
+
+%%%Presentation:
+\begin{document}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+\section*{Overview}
+
+\begin{frame}\frametitle<presentation>{Overview}
+  \tableofcontents 
+\end{frame}
+
+
+\section{Motivation}
+\begin{frame}{Motivation}
+Assessing if subject is understanding presented material has obvious uses \\
+\begin{tiny}(in a future where transmitting EEG devices are installed in every newborn) \end{tiny}
+    \begin{block}{Motivation} \begin{itemize}
+	\item Testing 
+	\item Learning
+    \end{itemize} \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Stimulus}
+\begin{frame}{Stimulus}
+    \begin{block}{Presentation} \begin{itemize}
+	\item Audio only
+	\item Full English words presented in either 
+		\begin{itemize} 
+			\item a meaningful order 
+			\item an order without intentional order 
+		\end{itemize}
+	\item Present twenty 15 second clips in random order
+	\item Balanced sources of sense and nonsense
+    \end{itemize} \end{block}
+\end{frame}
+
+%%%%
+\subsection{Ripping}
+\begin{frame}{From Youtube}
+    \begin{block}{Nonsense} \begin{itemize}
+	\item Boston Legal: Lawyer with Word Salad to jury with ``word salad'' \href{http://www.youtube.com/watch?v=2wkZfq86kgY\#t=20s}{ [link]}
+	\item Monty Python: Rutland Weekend Television \href{http://www.youtube.com/watch?v=hU0QZQRTNr0\#t=20s}{ [link]}
+    \end{itemize} \end{block}
+    \begin{block}{Sense} \begin{itemize}
+	\item Boston Legal: Same actor presenting to jury without ``word salad'' \href{http://www.youtube.com/watch?v=7TegIxJUsE0&NR}{ [link]}  
+	\item Al Jazeera news clip (hopefully unfamiliar anchor)
+    \end{itemize} \end{block}
+\end{frame}
+
+%%%%
+\subsection{Generating}
+\begin{frame}{Synthesised text}
+    \begin{block}{Synthesis } \begin{itemize}
+       \item Sense and nonsense generated from same corpus (Project Gutenberg)
+		\begin{itemize} 
+			\item Kurt Vonnegut's short story collection
+			\item Hitchhikers guide to the galaxy
+		\end{itemize}
+	\item Nonsense clips jumbled with a Markov chain based on word frequencies
+	    \begin{small}\begin{quote}
+	    He was the orderly; looked at the legal implications of
+	    peace and then he said, the parents of triplets!  A mere
+	    stripling in hospital, a beautiful picture of the number he
+	    was said Leora Duncan! 
+
+	    If you prove in!  Ah, you, think of fine, and he saluted
+	    her portrait of Termination, an apple tree: right said.
+	    \end{quote}\end{small}
+	\item All spoken by the same voice in text-to-speech application
+    \end{itemize} \end{block}
+\end{frame}
+\begin{frame}
+\includegraphics[width=\textwidth,height=.8\textheight,keepaspectratio]{img/stimulus}
+\end{frame}
+
+%%%%
+\subsection{Playing}
+\begin{frame}{ Playing}
+    \begin{block}{Tools} \begin{itemize}
+	\item  Custom PERL scripts and mp3info to randomize clips
+	\item  Dadadodo: jumbling 
+	\item  Festival: text-to-speech
+	\item  Ffplay (ffmpeg): playing
+    \end{itemize} \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Recording}
+\begin{frame}{ Emotive}
+\includegraphics[width=.5\textwidth,height=0.5\textheight,keepaspectratio]{img/emotive_headset}
+\includegraphics[width=.5\textwidth,height=0.5\textheight,keepaspectratio]{img/emotive_interface}
+\end{frame}
+
+%%%
+\subsection{Subjects}
+\begin{frame}{ }
+    \begin{block}{Subjects} \begin{itemize}
+	\item  6 subjects with 20 labeled instances each
+	\item  1 subjects with 100 labeled instances 
+    \end{itemize} \end{block}
+    \begin{block}{Familiarity} \begin{itemize}
+	\item  one of 6 recognized Monty Python
+	\item  subject with many labeled instances became familiar with clips
+    \end{itemize} \end{block}
+\end{frame}
+
+\begin{frame}{ }
+    \begin{multicols}{2}
+    \begin{figure}
+    \includegraphics[width=.45\textwidth,height=.8\textheight,keepaspectratio]{img/kat_raw}
+    \caption{Before Normalization}
+    \end{figure}
+    \begin{figure}
+    \includegraphics[width=.45\textwidth,height=.8\textheight,keepaspectratio]{img/norm_bad}
+    \caption{After Normalization}
+    \end{figure}
+    \end{multicols}
+\end{frame}
+%%%
+\subsection{Parsing}
+\begin{frame}{ }
+    \begin{block}{Format} \begin{itemize}
+	\item  Emotive provided application was used to convert to CSV from proprietary
+	\item  Partitioning and labeling from CSV was done in two environments
+	\begin{itemize}
+		\item In Matlab using Owen Durni's structure for classification within Matlab
+		\item With PERL to create ARFF formated instances for WEKA
+	\end{itemize}
+    \end{itemize} \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Feature Selection}
+\subsection{Basic Features}
+\begin{frame}{ }
+    \begin{block}{Basic Features} \begin{itemize}
+    	\item Mean
+    	\item Var
+    	\item Median
+    \end{itemize} \end{block}
+\end{frame}
+
+%%%
+\subsection{Power Spectrum}
+\begin{frame}{ Power Spectrum}
+    \begin{multicols}{2}
+    \begin{figure}
+    \includegraphics[width=.5\textwidth,height=.4\textheight,keepaspectratio]{img/fft_centered}
+    \caption{Power spectrum of all channels}
+    \end{figure}
+    \begin{figure}
+    \includegraphics[width=.5\textwidth,height=.4\textheight,keepaspectratio]{img/fft_onechanel}
+    \caption{Power spectrum of only one channel (representative)}
+    \end{figure}
+    \end{multicols}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Classification}
+%classifcation to examine nature of data
+\subsection{Tools}
+\begin{frame}{ }
+    \begin{block}{Matlab} 
+     Matlab was used to classify initial results
+	\begin{itemize}
+	    \item Logistic Regression 
+	    \item Naive Bayes
+	\end{itemize} 
+    \end{block}
+    \begin{block}{WEKA} \begin{itemize}
+	\item Logistic Regression 
+	\item Naive Bayes
+	\item AdaBoost
+	\item Tree
+	\item Rule
+    \end{itemize} \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Results}
+\subsection{Individual} 
+\begin{frame}{Individual trails (Matlab)} 
+   \begin{table}
+    \begin{tabular}{l|ccc}
+    Idv	    &Accuracy	    &Classifier		    &Feature \\ \hline \hline
+    \rowcolor{blue} kat     &0.738095       &logisticRegression     &mean   \\
+    \rowcolor{teal} kat     &0.738095       &logisticRegression     &median \\
+    kat     &0.666667       &logisticRegression     &var    \\
+    \rowcolor{teal}kat     &0.738095       &nbayes &mean                   \\
+    kat     &0.738095       &nbayes &median                 \\
+    kat     &0.666667       &nbayes &var                    \\ \hline
+    \rowcolor{blue}pat     &0.571429       &logisticRegression     &mean   \\
+    \rowcolor{teal} pat     &0.571429       &logisticRegression     &median \\
+    pat     &0.428571       &logisticRegression     &var    \\
+    pat     &0.428571       &nbayes &mean                   \\
+    pat     &0.404762       &nbayes &median                 \\
+    pat     &0.404762       &nbayes &var                    \\ \hline
+    rachel  &0.619048       &logisticRegression     &mean   \\
+    rachel  &0.595238       &logisticRegression     &median \\
+    rachel  &0.595238       &logisticRegression     &var    \\
+    \rowcolor{blue}rachel  &0.666667       &nbayes &mean                   \\
+    rachel  &0.642857       &nbayes &median                 \\
+    rachel  &0.595238       &nbayes &var                    \\
+
+    \end{tabular}
+    \caption{Classifier Results from Matlab (individual trails)}
+   \end{table}
+\end{frame}
+
+\begin{frame}{Individual trails (Matlab)} 
+   \begin{table}
+    \begin{tabular}{l|ccc}
+    Idv	    &Accuracy	    &Classifier		    &Feature \\ \hline\hline 
+    \rowcolor{blue} rose    &0.666667       &logisticRegression     &mean\\
+    \rowcolor{teal} rose    &0.666667       &logisticRegression     &median\\
+    \rowcolor{teal} rose    &0.666667       &logisticRegression     &var\\
+    \rowcolor{teal} rose    &0.666667       &nbayes &mean\\
+    \rowcolor{teal} rose    &0.666667       &nbayes &median\\
+    rose    &0.309524       &nbayes &var\\ \hline
+    sarah   &0.428571       &logisticRegression     &mean\\ 
+    sarah   &0.547619       &logisticRegression     &median\\
+    sarah   &0.642857       &logisticRegression     &var\\
+    \rowcolor{blue}sarah   &0.666667       &nbayes &mean\\
+    \rowcolor{teal} sarah   &0.666667       &nbayes &median\\
+    sarah   &0.404762       &nbayes &var\\
+    walt    &0.500000       &logisticRegression     &mean\\ \hline
+    walt    &0.500000       &logisticRegression     &median\\
+    \rowcolor{blue}walt    &0.523810       &logisticRegression     &var\\
+    walt    &0.476190       &nbayes &mean\\
+    walt    &0.476190       &nbayes &median\\
+    walt    &0.500000       &nbayes &var\\
+    \end{tabular}
+    \caption{Classifier Results from Matlab (individual trails)}
+   \end{table}
+\end{frame}
+\begin{frame}
+    \begin{block}{Classifier and Feature} \begin{itemize}
+	\item Not often much better than chance 
+	\item Neither assumption (linear, conditionally independent) resulted in constantly better performance
+	\item Mean most informative 
+    \end{itemize} \end{block}
+    \begin{block}{Notes} \begin{itemize}
+    	\item Variance did surprising well on Walt. He recognized the Monty Python sketch.
+    	\item Kat's state was most accurately predicted. Her EEG visibly changed for each clip.
+	\item Each individual is classified on only 20 instances
+    \end{itemize} \end{block}
+\end{frame}
+\subsection{Concatenated} 
+\begin{frame}{All trials (WEKA)} 
+   \begin{table}
+    \begin{tabular}{l|c}
+    Classifier		& Accuracy \\ \hline \hline
+    Rule		&56.8627 \\ \hline
+    AdaBoost		&55.3922 \\ \hline
+    Bagging(Jrip/Bayes)	&54.4118 \\ \hline
+    Bagging(Default)	&53.9216 \\ \hline
+    NaiveBayes		&53.4314 \\ \hline
+    Tree			&52.9412 \\ \hline
+    logistic		&51.9608 
+    \end{tabular}
+    \caption{Classifier Results from WEKA on all trails combined}
+   \end{table}
+\end{frame}
+
+\begin{frame}{Classifiers}
+    \begin{block}{Informative channels} \begin{itemize}
+	\item  JRip (Rule learner) used only the AF4 channel
+	\item J48 (Tree) had only one leaf
+	\item AdaBoost used tree that considered only 5 channels
+    \end{itemize} \end{block}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusions}
+\begin{frame}{Conclusions}
+    \begin{block}{ } \begin{itemize}
+    	\item Not able to classify with significant accuracy for more than one individual
+    	\item Need better features
+    	\item Need more information and data
+    \end{itemize} \end{block}
+\end{frame}
+\begin{frame}{Questions?}
+    \begin{figure}
+    \includegraphics[width=\textwidth,height=.8\textheight,keepaspectratio]{img/denny}
+    \end{figure}
+\end{frame}
+
+\end{document}
+
+
+
+
+
